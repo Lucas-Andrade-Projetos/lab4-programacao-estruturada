@@ -19,7 +19,6 @@ int main()
     getchar();
     fgets(frase, NMAX, stdin);
 
-
     if (procura_palavra(palavra, frase)) printf("SIM");
     else printf("NAO");
     
@@ -31,11 +30,12 @@ int main()
 int procura_palavra(char palavra[NMAX], char frase[NMAX])
 {
     int tamanho_palavra = strlen(palavra);
+    int tamanho_frase = strlen(frase);
 
-   //esse for percorre cada caractere do texto 
-   for (int i = 0; i <= NMAX; i++) {
+   // Percorre cada caractere do texto até o ponto em que a palavra poderia caber
+   for (int i = 0; i <= tamanho_frase - tamanho_palavra; i++) {
         int j;
-        //esse for percorre o texto em busca do padrao da palavra ccaso nao de match entre a letra da palavra e do texto ele quebra o laço e caso dê
+        //esse for percorre o texto em busca do padrao da palavra caso nao de match entre a letra da palavra e do texto ele quebra o laço e caso dê
         //quando o tamanho j for o mesmo da palavra ele assume que a palavra está respeitando o padrao de letras e modelo, ou seja tem a palavra
         //se ele nao achar o padrao ele devolve false;
         for (j = 0; j < tamanho_palavra; j++){
@@ -44,8 +44,9 @@ int procura_palavra(char palavra[NMAX], char frase[NMAX])
                 break;
             }
         }
-        
-        if(j == tamanho_palavra){
+
+        // eu verifico se o proximo caractere depois do fim da palavra é nulo para saber se a palavra não é uma versão reduzida de outra ex fish dentro de fishes
+        if(j == tamanho_palavra && (frase[i + j] == ' ' || frase[i + j] == '\n' || frase[i + j] == '\0')){
             return 1;
         }
     }
